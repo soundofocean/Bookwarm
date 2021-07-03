@@ -1,19 +1,17 @@
 import CoreData
 import SwiftUI
 
-
-
 @main
-struct TrainingApp: App {
+struct BookwormApp: App {
   
   /// Создание объекта, в котором хранится контейнер с именем Data Model
-  let container = NSPersistentContainer(name: "Training")
-  
+  let container = NSPersistentContainer(name: "Bookworm")
   var body: some Scene {
+    
     WindowGroup {
       ContentView()
-  
-//        Добавление ключа managedObjectContext в environment со значением container view context
+        
+        // Добавление ключа managedObjectContext в environment со значением container view context
         .environment(\.managedObjectContext, container.viewContext)
       
     }
@@ -21,9 +19,9 @@ struct TrainingApp: App {
   
   init() {
     container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-        if let error = error as NSError? {
-            fatalError("Unresolved error \(error), \(error.userInfo)")
-        }
-    })      
+      if let error = error as NSError? {
+        fatalError("Unresolved error \(error), \(error.userInfo)")
+      }
+    })
   }
 }

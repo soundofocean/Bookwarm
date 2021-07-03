@@ -1,37 +1,53 @@
+import CoreData
+
 import SwiftUI
 
 struct ContentView: View {
-
+ 
+// Запись данных из глобального хранилища в локальный параметр ( ссылка на сам Environment)
   @Environment(\.managedObjectContext) var moc
-
+  
   //Запрос в Coredata, без сортировки и запись полученного ответа в переменную
   @FetchRequest(entity: Student.entity(), sortDescriptors: []) var students: FetchedResults<Student>
   
-
+  
   var body: some View {
-          VStack {
-              List {
-                ForEach(students, id: \.id) { student in
-                      Text(student.name ?? "Unknown")
-                  }
-              }
-          }
-          Button("Add") {
-            let firstNames = ["Ginny", "Harry", "Hermione", "Luna", "Ron"]
-            let lastNames = ["Granger", "Lovegood", "Potter", "Weasley"]
-
-            let chosenFirstName = firstNames.randomElement()!
-            let chosenLastName = lastNames.randomElement()!
-            
-            let student = Student(context: self.moc)
-            student.id = UUID()
-            student.name = "\(chosenFirstName) \(chosenLastName)"
-            
-            try? self.moc.save()
-
-        // more code to come
-    }
+    VStack {
+      
+      List {
+        ForEach(students, id: \.id) { student in
+          Text(student.name ?? "Unknown")
+        }
       }
+      
+      Button("Add") {
+        
+        let firstNames = ["Ginny", "Harry", "Hermione", "Luna", "Ron"]
+        
+        let lastNames = ["Granger", "Lovegood", "Potter", "Weasley"]
+        
+        
+        let chosenFirstName = firstNames.randomElement()!
+        
+        let chosenLastName = lastNames.randomElement()!
+        
+        
+        /// Объект записи БД
+        let student = Student(context: self.moc)
+        
+        student.id = UUID()
+        
+        student.name = "\(chosenFirstName) \(chosenLastName)"
+        
+//        Попытка сохранения в контейнер всей информации
+        try? self.moc.save()
+        
+      }
+    }
+  }
+}
+
+
 
 
 
@@ -55,7 +71,7 @@ struct ContentView: View {
 //    }
 //  }
 //}
-  
+
 
 //// Новый вид кнопки, которая остается нажатой после нажатия, но пока мы не воспользовались Binding происходит следующее: односторонний поток данных
 //// ContentView имеет свое логическое значение RememberMe, которое используется для создания PushButton - кнопка имеет начальное значение, предоставляемое ContentView. Однако, как только кнопка была создана, она берет на себя управление значением: она переключает свойство isOn между true и false внутри кнопки, но не передает это изменение обратно в ContentView.
@@ -101,8 +117,4 @@ struct ContentView: View {
 //  }
 //}
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
+
