@@ -34,7 +34,7 @@ struct ContentView: View {
             }
           }
         }
-          .onDelete(perform: deleteBooks)
+        .onDelete(perform: deleteBooks)
       }
       
       //  Заголовок панели навигации этого представления с локализованной строкой

@@ -66,8 +66,8 @@ struct DetailView: View {
     .alert(isPresented: $showingDeleteAlert) {
       Alert(title: Text("Delete book"), message: Text("Are you sure?"),
             primaryButton: .destructive(Text("Delete")) {
-        self.deleteBook()
-      }, secondaryButton: .cancel()
+              self.deleteBook()
+            }, secondaryButton: .cancel()
       )
     }
     
